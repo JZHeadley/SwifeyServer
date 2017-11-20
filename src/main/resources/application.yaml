@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://jzheadley.com:3306/Swifey?autoReconnect=true&useSSL=false
+    username: swifey
+    password: swifeyyefiws
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        strategy: org.hibernate.cfg.EJB3NamingStrategy
+    show-sql: true
+

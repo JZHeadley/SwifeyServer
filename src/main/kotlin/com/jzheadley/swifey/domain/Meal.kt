@@ -15,7 +15,4 @@ data class Meal(
         var restaurant: Restaurant?,
         @OneToMany(mappedBy = "meal")
         var swipeTimes: Set<SwipeTime>
-) {
-    @Suppress("unused")
-    private constructor() : this(-1, "", "", -1, null, setOf())
-}
+)

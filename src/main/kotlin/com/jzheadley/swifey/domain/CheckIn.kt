@@ -1,6 +1,5 @@
 package com.jzheadley.swifey.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.sql.Timestamp
 import javax.persistence.*
 

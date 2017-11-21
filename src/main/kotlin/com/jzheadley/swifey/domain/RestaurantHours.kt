@@ -1,7 +1,6 @@
 package com.jzheadley.swifey.domain
 
 import java.sql.Timestamp
-import java.time.Instant
 import javax.persistence.*
 
 @Entity
@@ -15,7 +14,4 @@ data class RestaurantHours(
         @ManyToOne
         @JoinColumn(name = "restaurantId")
         var restaurant: Restaurant?
-) {
-    @Suppress("unused")
-    private constructor() : this(-1, Timestamp.from(Instant.now()), Timestamp.from(Instant.now()), "", null)
-}
+)

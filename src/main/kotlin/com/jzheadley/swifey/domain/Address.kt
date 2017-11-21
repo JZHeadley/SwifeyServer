@@ -12,7 +12,4 @@ data class Address(
         var city: String,
         var state: String,
         var zipCode: Int
-) {
-    @Suppress("unused")
-    private constructor() : this(-1, -1, "", "", "", -1)
-}
+)

@@ -1,7 +1,6 @@
 package com.jzheadley.swifey.domain
 
 import java.sql.Timestamp
-import java.time.Instant
 import javax.persistence.*
 
 @Entity
@@ -13,7 +12,4 @@ data class SwipeTime(
         var endTime: Timestamp,
         @OneToOne
         @JoinColumn(name = "mealId")
-        var meal: Meal?) {
-    @Suppress("unused")
-    private constructor() : this(-1, Timestamp.from(Instant.now()), Timestamp.from(Instant.now()), null)
-}
+        var meal: Meal?)

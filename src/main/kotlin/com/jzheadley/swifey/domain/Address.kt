@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "Addresses")
 data class Address(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        var addressId: Int?,
+        var addressId: Int? = -1,
         var buildingNumber: Int,
         var streetName: String,
         var city: String,

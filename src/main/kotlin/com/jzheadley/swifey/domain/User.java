@@ -3,8 +3,8 @@ package com.jzheadley.swifey.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -14,7 +14,7 @@ public class User {
     private String userId;
     private String firstName;
     private String lastName;
-    private LocalDate dob;
+    private Date dob;
     private Timestamp creationDate;
     private Integer numSwipes;
 
@@ -42,7 +42,7 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String firstName, String lastName, LocalDate dob, Timestamp creationDate, Integer numSwipes, Phone phone, Set<CheckIn> checkIns, Set<User> followers, Set<User> following) {
+    public User(String userId, String firstName, String lastName, Date dob, Timestamp creationDate, Integer numSwipes, Phone phone, Set<CheckIn> checkIns, Set<User> followers, Set<User> following) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -79,11 +79,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public LocalDate getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 

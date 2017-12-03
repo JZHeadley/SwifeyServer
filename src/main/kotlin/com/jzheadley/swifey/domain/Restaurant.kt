@@ -17,4 +17,7 @@ data class Restaurant(
         @JoinColumn(name = "phoneId")
         var phone: Phone?,
         @OneToMany(mappedBy = "restaurant")
-        var hours: MutableSet<RestaurantHours>)
+        var hours: MutableSet<RestaurantHours>,
+        @OneToMany(mappedBy = "swipeRestaurant")
+        var swipeTimes: MutableSet<SwipeTime>
+)

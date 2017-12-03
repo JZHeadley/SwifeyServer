@@ -12,7 +12,5 @@ data class Meal(
         var mealCost: Int,
         @ManyToOne
         @JoinColumn(name = "restaurantId")
-        var restaurant: Restaurant?,
-        @OneToMany(mappedBy = "meal")
-        var swipeTimes: Set<SwipeTime>
+        var restaurant: Restaurant?
 )

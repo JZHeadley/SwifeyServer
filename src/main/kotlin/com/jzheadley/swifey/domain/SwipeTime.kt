@@ -11,5 +11,5 @@ data class SwipeTime(
         var startTime: Timestamp,
         var endTime: Timestamp,
         @OneToOne
-        @JoinColumn(name = "mealId")
-        var meal: Meal?)
+        @JoinColumn(name = "restaurantId")
+        var swipeRestaurant: Restaurant?)

@@ -2,6 +2,7 @@ package com.jzheadley.swifey.web.controllers
 
 import com.jzheadley.swifey.domain.Restaurant
 import com.jzheadley.swifey.util.ResponseUtil
+import com.jzheadley.swifey.web.dto.RestaurantDTO
 import com.jzheadley.swifey.web.repositories.RestaurantRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,10 +22,22 @@ class RestaurantController(val restaurantRepository: RestaurantRepository) {
     fun getRestaurantById(id: Int): ResponseEntity<Restaurant> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(restaurantRepository.findById(id)))
 
     @GetMapping("/today")
-    fun getTodaysRestaurants(): ResponseEntity<MutableList<Restaurant>> = ResponseUtil.wrapOrNotFound(
-            Optional.ofNullable(
-                    restaurantRepository.findByDayOfWeek(LocalDate.now()
-                            .dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH))
-            )
-    )
+    fun getTodaysRestaurants(): ResponseEntity<List<RestaurantDTO>> {
+        var restaurants = restaurantRepository.findByDayOfWeek(LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH))?.map { restaurant -> restaurantToDTO(restaurant) }
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(restaurants))
+    }
+
+    fun restaurantToDTO(restaurant: Restaurant): RestaurantDTO {
+        val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
+        var hours = restaurant.hours.filter { restaurantHours -> restaurantHours.dayOfWeek == dayOfTheWeek }[0]
+        println("Today's hours are:\t" + hours)
+        return RestaurantDTO(restaurant.restaurantId,
+                restaurant.restaurantName,
+                restaurant.restaurantPhotoUrl,
+                restaurant.restaurantDescription,
+                restaurant.address,
+                restaurant.phone,
+                hours)
+    }
+
 }

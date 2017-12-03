@@ -3,7 +3,7 @@ package com.jzheadley.swifey.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Time;
 
 @Entity
 @Table(name = "RestaurantHours")
@@ -11,15 +11,15 @@ public class RestaurantHours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer hoursId;
-    private Timestamp openTime;
-    private Timestamp closeTime;
+    private Time openTime;
+    private Time closeTime;
     private String dayOfWeek;
     @ManyToOne
     @JoinColumn(name = "restaurantId")
     @JsonIgnore
     private Restaurant restaurant;
 
-    public RestaurantHours(Timestamp openTime, Timestamp closeTime, String dayOfWeek, Restaurant restaurant) {
+    public RestaurantHours(Time openTime, Time closeTime, String dayOfWeek, Restaurant restaurant) {
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.dayOfWeek = dayOfWeek;
@@ -38,19 +38,19 @@ public class RestaurantHours {
         this.hoursId = hoursId;
     }
 
-    public Timestamp getOpenTime() {
+    public Time getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(Timestamp openTime) {
+    public void setOpenTime(Time openTime) {
         this.openTime = openTime;
     }
 
-    public Timestamp getCloseTime() {
+    public Time getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(Timestamp closeTime) {
+    public void setCloseTime(Time closeTime) {
         this.closeTime = closeTime;
     }
 
@@ -77,7 +77,7 @@ public class RestaurantHours {
                 ", openTime=" + openTime +
                 ", closeTime=" + closeTime +
                 ", dayOfWeek='" + dayOfWeek + '\'' +
-                ", restaurant=" + restaurant +
+                ", restaurant=" + restaurant.getRestaurantId() +
                 '}';
     }
 }

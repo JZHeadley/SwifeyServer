@@ -9,7 +9,7 @@ data class Restaurant(
         val restaurantId: Int?,
         var restaurantName: String,
         var restaurantPhotoUrl: String,
-        var restaurantDescription: String,
+//        var restaurantDescription: String,
         @OneToOne
         @JoinColumn(name = "addressId")
         var address: Address?,

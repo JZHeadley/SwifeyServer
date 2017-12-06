@@ -29,12 +29,12 @@ class RestaurantController(val restaurantRepository: RestaurantRepository) {
 
     fun restaurantToDTO(restaurant: Restaurant): RestaurantDTO {
         val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
-        var hours = restaurant.hours.filter { restaurantHours -> restaurantHours.dayOfWeek == dayOfTheWeek }[0]
+        val hours = restaurant.hours.filter { restaurantHours -> restaurantHours.dayOfWeek.equals(dayOfTheWeek.toUpperCase()) }.first()
         println("Today's hours are:\t" + hours)
         return RestaurantDTO(restaurant.restaurantId,
                 restaurant.restaurantName,
                 restaurant.restaurantPhotoUrl,
-                restaurant.restaurantDescription,
+//                restaurant.restaurantDescription,
                 restaurant.address,
                 restaurant.phone,
                 hours)

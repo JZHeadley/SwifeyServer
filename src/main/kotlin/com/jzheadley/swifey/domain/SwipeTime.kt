@@ -1,6 +1,6 @@
 package com.jzheadley.swifey.domain
 
-import java.sql.Timestamp
+import java.sql.Time
 import javax.persistence.*
 
 @Entity
@@ -8,8 +8,8 @@ import javax.persistence.*
 data class SwipeTime(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val swipeTimeId: Int,
-        var startTime: Timestamp,
-        var endTime: Timestamp,
+        var startTime: Time,
+        var endTime: Time,
         @OneToOne
         @JoinColumn(name = "restaurantId")
         var swipeRestaurant: Restaurant?)

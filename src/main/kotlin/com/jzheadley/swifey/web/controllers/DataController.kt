@@ -24,9 +24,9 @@ class DataController(val userRepository: UserRepository, val phoneRepository: Ph
         val address = Address(null, 7331, "Buchanan Dr.", "King George", "Virginia", 22485)
         val user1 = User(UUID.randomUUID().toString(), "Jonathon,", "Headley", Date(1997, 7, 23), Timestamp.from(Instant.now()), 300, phone1, null, null, null)
         val user2 = User(UUID.randomUUID().toString(), "Jonathon,", "Headley", Date(1996, 8, 21), Timestamp.from(Instant.now()), 300, phone1, null, setOf(user1), null)
-        val restaurant = Restaurant(null, "Potato Restaurant", "", "", address, phone2, mutableSetOf(), mutableSetOf())
+        val restaurant = Restaurant(null, "Potato Restaurant", "", address, phone2, mutableSetOf(), mutableSetOf())
 
-        val restaurantToday = Restaurant(null, "Potato Restaurant", "", "", address, phone2, mutableSetOf(), mutableSetOf())
+        val restaurantToday = Restaurant(null, "Potato Restaurant", "", address, phone2, mutableSetOf(), mutableSetOf())
         val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
         val restaurantHoursToday = RestaurantHours(Time(9, 0, 0), Time(20, 0, 0), dayOfTheWeek, restaurantToday)
 

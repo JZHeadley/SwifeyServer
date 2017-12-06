@@ -8,7 +8,7 @@ data class RestaurantDTO(
         var restaurantId: Int?,
         var restaurantName: String,
         var restaurantPhotoUrl: String,
-        var restaurantDescription: String,
+//        var restaurantDescription: String,
         var address: Address?,
         var phone: Phone?,
         var hours: RestaurantHours

@@ -25,7 +25,7 @@ class RestaurantController(val restaurantRepository: RestaurantRepository, val m
 
     @GetMapping("/today")
     fun getTodaysRestaurants(): ResponseEntity<List<RestaurantDTO>> {
-        var restaurants = restaurantRepository.findByDayOfWeek(LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH))?.map { restaurant -> restaurantToDTO(restaurant) }
+        val restaurants = restaurantRepository.findByDayOfWeek(LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH))?.map { restaurant -> restaurantToDTO(restaurant) }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(restaurants))
     }
 
@@ -36,14 +36,14 @@ class RestaurantController(val restaurantRepository: RestaurantRepository, val m
     fun restaurantToDTO(restaurant: Restaurant): RestaurantDTO {
         val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
         val hours = restaurant.hours.filter { restaurantHours -> restaurantHours.dayOfWeek.equals(dayOfTheWeek.toUpperCase()) }.first()
-        println("Today's hours are:\t" + hours)
+//        println("Today's hours are:\t" + hours)
         return RestaurantDTO(restaurant.restaurantId,
                 restaurant.restaurantName,
                 restaurant.restaurantPhotoUrl,
 //                restaurant.restaurantDescription,
                 restaurant.address,
                 restaurant.phone,
-                hours)
+                hours, restaurant.swipeTimes)
     }
 
 }

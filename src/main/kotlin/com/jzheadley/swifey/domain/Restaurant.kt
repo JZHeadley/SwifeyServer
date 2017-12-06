@@ -1,6 +1,5 @@
 package com.jzheadley.swifey.domain
 
-import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.*
 
 @Entity
@@ -20,6 +19,5 @@ data class Restaurant(
         @OneToMany(mappedBy = "restaurant")
         var hours: MutableSet<RestaurantHours>,
         @OneToMany(mappedBy = "swipeRestaurant")
-        @JsonBackReference
         var swipeTimes: MutableSet<SwipeTime>
 )

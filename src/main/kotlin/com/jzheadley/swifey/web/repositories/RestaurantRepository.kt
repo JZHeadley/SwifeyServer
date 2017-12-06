@@ -16,6 +16,7 @@ interface RestaurantRepository : JpaRepository<Restaurant, Long> {
 
     @Query(value = "SELECT DISTINCT r.* FROM " +
             "Restaurants r JOIN RestaurantHours h on r.restaurantId = h.restaurantId " +
+            //"JOIN swipetimes s ON r.restaurantId = s.restaurantId " +
             "WHERE h.dayOfWeek = upper( ?1 )", nativeQuery = true)
     fun findByDayOfWeek(dayOfWeek: String?): MutableList<Restaurant>?
 }

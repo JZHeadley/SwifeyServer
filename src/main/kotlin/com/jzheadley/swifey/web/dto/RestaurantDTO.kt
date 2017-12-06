@@ -3,6 +3,7 @@ package com.jzheadley.swifey.web.dto
 import com.jzheadley.swifey.domain.Address
 import com.jzheadley.swifey.domain.Phone
 import com.jzheadley.swifey.domain.RestaurantHours
+import com.jzheadley.swifey.domain.SwipeTime
 
 data class RestaurantDTO(
         var restaurantId: Int?,
@@ -11,5 +12,6 @@ data class RestaurantDTO(
 //        var restaurantDescription: String,
         var address: Address?,
         var phone: Phone?,
-        var hours: RestaurantHours
+        var hours: RestaurantHours,
+        var swipeTimes: MutableSet<SwipeTime>
 )

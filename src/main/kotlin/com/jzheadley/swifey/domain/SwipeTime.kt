@@ -1,5 +1,6 @@
 package com.jzheadley.swifey.domain
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.sql.Time
 import javax.persistence.*
 
@@ -11,5 +12,6 @@ data class SwipeTime(
         var startTime: Time,
         var endTime: Time,
         @OneToOne
+        @JsonManagedReference
         @JoinColumn(name = "restaurantId")
         var swipeRestaurant: Restaurant?)

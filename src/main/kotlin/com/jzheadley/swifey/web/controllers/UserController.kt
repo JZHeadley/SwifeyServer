@@ -7,6 +7,7 @@ import com.jzheadley.swifey.web.repositories.UserRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import javax.validation.constraints.Null
 
 @RestController
 @RequestMapping("/api/users")
@@ -17,7 +18,11 @@ class UserController(val userRepository: UserRepository, val phoneRepository: Ph
     @GetMapping("/{id}")
     fun getUSerById(userId: String): ResponseEntity<User> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findById(userId)))
 
+    @GetMapping("/search/{searchString}")
+    fun searchUser(@PathVariable("searchString")searchString:String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findUserLike(searchString)))
+
     @PostMapping("/")
+
     fun createUser(@RequestBody user: User): ResponseEntity<User> {
         // Below is what would be if The saves returned what I needed
 //        val phone = phoneRepository.save(user.phone)

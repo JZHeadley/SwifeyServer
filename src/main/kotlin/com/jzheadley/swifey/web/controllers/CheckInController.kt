@@ -23,6 +23,11 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
     @GetMapping("/{id}")
     fun getCheckInById(id: Int): ResponseEntity<CheckIn> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findById(id)))
 
+
+    @GetMapping("/user/{userid}")
+    fun getCheckInById(userId: String): ResponseEntity<MutableList<CheckIn>> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findByUserId(userId)))
+
+
     @PostMapping("/")
     fun createCheckIn(@RequestBody checkIn: CheckIn): ResponseEntity<CheckIn> {
         // Equivalent call if worked how I was counting on them too...

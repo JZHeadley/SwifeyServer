@@ -31,4 +31,7 @@ class UserController(val userRepository: UserRepository, val phoneRepository: Ph
         // This saves both at once in one call.  The mostly equivalent sql is in the repositories
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.save(user)))
     }
+
+    @PostMapping("/{id}/messagingId/{messagingId}")
+    fun setUserMessagingId(@PathVariable("id") userId: String, @PathVariable("messagingId") messagingId: String) = userRepository.setUserMessagingId(userId, messagingId)
 }

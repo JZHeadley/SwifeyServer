@@ -105,6 +105,14 @@ public class User {
         this.numSwipes = numSwipes;
     }
 
+    public String getMessagingId() {
+        return messagingId;
+    }
+
+    public void setMessagingId(String messagingId) {
+        this.messagingId = messagingId;
+    }
+
     public Phone getPhone() {
         return phone;
     }
@@ -146,10 +154,11 @@ public class User {
                 ", dob=" + dob +
                 ", creationDate=" + creationDate +
                 ", numSwipes=" + numSwipes +
+                ", messagingId='" + messagingId + '\'' +
                 ", phone=" + phone +
                 ", checkIns=" + checkIns +
-                ", followers=" + followers +
-                ", following=" + following +
+//                ", followers=" + followers +
+//                ", following=" + following +
                 '}';
     }
 }

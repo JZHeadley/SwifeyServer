@@ -26,4 +26,7 @@ interface UserRepository : JpaRepository<User, Long> {
     @Transactional
     @Query(value = "update users set messagingId = ?2 where userID=?1'", nativeQuery = true)
     fun setUserMessagingId(userId: String, messagingId: String)
+
+    @Query(value = "", nativeQuery = true)
+    fun findFollowersOfUser(userId: String): List<User>
 }

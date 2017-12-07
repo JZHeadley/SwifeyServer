@@ -17,6 +17,7 @@ public class User {
     private Date dob;
     private Timestamp creationDate;
     private Integer numSwipes;
+    private String messagingId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "phoneId")
@@ -42,13 +43,14 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String firstName, String lastName, Date dob, Timestamp creationDate, Integer numSwipes, Phone phone, Set<CheckIn> checkIns, Set<User> followers, Set<User> following) {
+    public User(String userId, String firstName, String lastName, Date dob, Timestamp creationDate, Integer numSwipes, String messagingId, Phone phone, Set<CheckIn> checkIns, Set<User> followers, Set<User> following) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
         this.creationDate = creationDate;
         this.numSwipes = numSwipes;
+        this.messagingId = messagingId;
         this.phone = phone;
         this.checkIns = checkIns;
         this.followers = followers;

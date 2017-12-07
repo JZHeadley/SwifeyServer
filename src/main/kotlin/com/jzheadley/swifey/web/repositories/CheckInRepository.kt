@@ -17,4 +17,10 @@ interface CheckInRepository : JpaRepository<CheckIn, Long> {
     @Query(value = "Select * from CheckIn where userId = ?1", nativeQuery = true)
     fun findByUserId(userId: String): MutableList<CheckIn>?
 
+//    @Modifying
+//    @Query(value = "INSERT INTO checkin (checkInDate, restaurantId, maxNumOrders, userId) VALUES (sysdate,?2,?3,?4)", nativeQuery = true)
+//    @Transactional
+//    fun save(restaurantId: Int, maxNumOrders: Int, userId: String): Int
+
+
 }

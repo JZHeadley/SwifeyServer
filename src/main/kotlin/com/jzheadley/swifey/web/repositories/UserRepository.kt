@@ -14,7 +14,7 @@ interface UserRepository : JpaRepository<User, Long> {
     @Query(value = "Select * from Users where userId = ?1", nativeQuery = true)
     fun findById(userId: String): User?
 
-    //    @Modifying
+//        @Modifying
 //    @Query(value = "insert into users values(:userId,:firstName,:lastName,:dob,sysdate,numSwipes,:phoneId)", nativeQuery = true)
 //    @Transactional
 //    fun save(userId: String, firstName: String, lastName: String, dob: Date, numSwipes: Int, phoneId: Int): Int

@@ -1,6 +1,7 @@
 package com.jzheadley.swifey.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -11,7 +12,9 @@ import java.util.Set;
 @Table(name = "Users")
 public class User {
     @Id
+    @Nullable
     private String userId;
+
     private String firstName;
     private String lastName;
     private Date dob;

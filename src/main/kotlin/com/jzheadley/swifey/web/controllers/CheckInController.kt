@@ -21,6 +21,9 @@ class CheckInController(val checkInRepository: CheckInRepository) {
         // Equivalent call if worked how I was counting on them too...
         // Relevant SQL is in the CheckInRepository
 //        checkInRepository.save(checkIn.restaurantCheckedInAt.restaurantId, checkIn.maxNumOrders, checkIn.checkedInUser.userId)
+
+        //Logic to handle sending messages to the correct people.
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.save(checkIn)))
 
     }

@@ -2,8 +2,10 @@ package com.jzheadley.swifey.web.repositories
 
 import com.jzheadley.swifey.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import javax.transaction.Transactional
 
 @SuppressWarnings("unused")
 @Repository
@@ -19,4 +21,9 @@ interface UserRepository : JpaRepository<User, Long> {
 //    @Transactional
 //    fun save(userId: String, firstName: String, lastName: String, dob: Date, numSwipes: Int, phoneId: Int): Int
 
+
+    @Modifying
+    @Transactional
+    @Query(value = "update users set messagingId = ?2 where userID=?1'", nativeQuery = true)
+    fun setUserMessagingId(userId: String, messagingId: String)
 }

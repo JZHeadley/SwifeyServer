@@ -8,10 +8,10 @@ import com.jzheadley.swifey.domain.SwipeTime
 data class RestaurantDTO(
         var restaurantId: Int?,
         var restaurantName: String,
-        var restaurantPhotoUrl: String,
+        var restaurantPhotoUrl: String?,
 //        var restaurantDescription: String,
         var address: Address?,
         var phone: Phone?,
-        var hours: RestaurantHours,
-        var swipeTimes: MutableSet<SwipeTime>
+        var hours: RestaurantHours?,
+        var swipeTimes: MutableSet<SwipeTime>?
 )

@@ -8,7 +8,7 @@ data class Restaurant(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val restaurantId: Int?,
         var restaurantName: String,
-        var restaurantPhotoUrl: String,
+        var restaurantPhotoUrl: String?,
 //        var restaurantDescription: String,
         @OneToOne
         @JoinColumn(name = "addressId")
@@ -17,7 +17,7 @@ data class Restaurant(
         @JoinColumn(name = "phoneId")
         var phone: Phone?,
         @OneToMany(mappedBy = "restaurant")
-        var hours: MutableSet<RestaurantHours>,
+        var hours: MutableSet<RestaurantHours>?,
         @OneToMany(mappedBy = "swipeRestaurant")
-        var swipeTimes: MutableSet<SwipeTime>
+        var swipeTimes: MutableSet<SwipeTime>?
 )

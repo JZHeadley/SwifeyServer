@@ -145,6 +145,10 @@ public class User {
         this.following = following;
     }
 
+    public String getName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String toString() {
         return "User{" +

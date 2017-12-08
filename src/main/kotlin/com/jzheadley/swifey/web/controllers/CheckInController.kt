@@ -2,13 +2,16 @@ package com.jzheadley.swifey.web.controllers
 
 import com.jzheadley.swifey.domain.CheckIn
 import com.jzheadley.swifey.domain.User
+import com.jzheadley.swifey.domain.payloads.CheckInPayload
 import com.jzheadley.swifey.util.ResponseUtil
+import com.jzheadley.swifey.utils.FromDTO.checkInToDTO
 import com.jzheadley.swifey.web.repositories.CheckInRepository
 import com.jzheadley.swifey.web.repositories.UserRepository
 import de.bytefish.fcmjava.client.FcmClient
 import de.bytefish.fcmjava.model.options.FcmMessageOptions
 import de.bytefish.fcmjava.requests.data.DataMulticastMessage
 import de.bytefish.fcmjava.requests.notification.NotificationPayload
+import de.bytefish.fcmjava.responses.FcmMessageResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.Duration
@@ -30,8 +33,9 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
 //        checkInRepository.save(checkIn.restaurantCheckedInAt.restaurantId, checkIn.maxNumOrders, checkIn.checkedInUser.userId)
 
         //Logic to handle sending messages to the correct people.
-        sendNotifsToFollowersOfUser(checkIn.checkedInUser!!.userId, checkIn)
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.save(checkIn)))
+        val savedCheckIn = checkInRepository.save(checkIn)
+        sendNotifsToFollowersOfUser(savedCheckIn.checkedInUser!!.userId, savedCheckIn)
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(savedCheckIn))
 
     }
 
@@ -44,11 +48,13 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
         val messagingingIds: List<String> = followers.map { follower -> follower.messagingId }
         val notification = DataMulticastMessage(messageOptions,
                 messagingingIds,
-                checkIn,
+                CheckInPayload(checkInToDTO(checkIn)),
                 NotificationPayload.builder()
+                        .setClickAction("RESTAURANT_MENU_FROM_CHECKIN")
                         .setBody(user.name + " has checked in at " + checkIn.restaurantCheckedInAt!!.restaurantName + ".  Place an order Now!")
                         .setTitle("A Swifey has checked in")
                         .build())
-        fcmClient.send(notification)
+        val response: FcmMessageResponse = fcmClient.send(notification)
+        println("FCM Message Response:\t" + response)
     }
 }

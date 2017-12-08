@@ -7,7 +7,7 @@ import com.jzheadley.swifey.domain.SwipeTime
 
 data class RestaurantDTO(
         var restaurantId: Int?,
-        var restaurantName: String,
+        var restaurantName: String?,
         var restaurantPhotoUrl: String?,
 //        var restaurantDescription: String,
         var address: Address?,

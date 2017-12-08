@@ -21,7 +21,7 @@ interface UserRepository : JpaRepository<User, Long> {
             "OR lastName LIKE CONCAT('%', ?1,'%')", nativeQuery = true)
     fun findUserLike(searchString: String): List<User>
 
-//        @Modifying
+//    @Modifying
 //    @Query(value = "insert into users values(:userId,:firstName,:lastName,:dob,sysdate,numSwipes,:phoneId)", nativeQuery = true)
 //    @Transactional
 //    fun save(userId: String, firstName: String, lastName: String, dob: Date, numSwipes: Int, phoneId: Int): Int

@@ -15,7 +15,7 @@ interface CheckInRepository : JpaRepository<CheckIn, Long> {
     fun findById(checkInId: Int): CheckIn?
 
     @Query(value = "SELECT * FROM checkin " +
-            "WHERE userid LIKE CONCAT('%',?1,'%') ", nativeQuery = true)
+            "WHERE userId=?1 ", nativeQuery = true)
     fun findByUserId(userId: String): MutableList<CheckIn>?
 
 //    @Modifying

@@ -26,7 +26,8 @@ class UserController(val userRepository: UserRepository, val phoneRepository: Ph
     fun getUserById(@PathVariable("id") userId: String): ResponseEntity<User> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findById(userId)))
 
     @GetMapping("/search/{searchString}")
-    fun searchUser(@PathVariable("searchString") searchString: String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findUserLike(searchString)))
+    fun searchUser(@PathVariable("searchString") searchString: String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findUserLike(searchString)
+            .map { user -> userToDTO(user) }))
 
     @GetMapping("/userid/{userId}/checkIns")
     fun getCheckInById(@PathVariable("userId") userid: String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findByUserId(userid)

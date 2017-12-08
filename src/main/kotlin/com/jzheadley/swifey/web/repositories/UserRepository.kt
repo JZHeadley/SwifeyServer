@@ -38,10 +38,10 @@ interface UserRepository : JpaRepository<User, Long> {
             "where f.userId = ?1", nativeQuery = true)
     fun findFollowersOfUser(userId: String): List<User>
 
+    //todo ensure that we don't already have the following pair in the database
     @Modifying
     @Transactional
     @Query(value = "Insert into Followings Values(?1, ?2)", nativeQuery = true)
-    //todo ensure that we don't already have the following pair in the database
     fun createFollowing(userId: String, followerId: String?): Int
 
 

@@ -1,6 +1,7 @@
 package com.jzheadley.swifey.web.controllers
 
 import com.jzheadley.swifey.domain.CheckIn
+import com.jzheadley.swifey.domain.Following
 import com.jzheadley.swifey.domain.Restaurant
 import com.jzheadley.swifey.domain.User
 import com.jzheadley.swifey.util.ResponseUtil
@@ -32,6 +33,17 @@ class UserController(val userRepository: UserRepository, val phoneRepository: Ph
     @GetMapping("/userid/{userId}/checkIns")
     fun getCheckInById(@PathVariable("userId") userid: String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findByUserId(userid)
     !!.map { checkIn -> checkInToDTO(checkIn) }))
+
+    @GetMapping("/{id}/follows")
+    fun getFollowersOfUser(@PathVariable("id")id:String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findFollowersOfUser(id)))
+
+    @PostMapping("/following")
+    fun addFollowing (@RequestBody following: Following): ResponseEntity<Int> {
+        //todo: return some diffrent
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.createFollowing(following.userId, following.follower.userId)))
+
+    }
 
 
     @PostMapping("/")

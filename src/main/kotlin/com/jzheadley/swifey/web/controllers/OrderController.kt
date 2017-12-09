@@ -17,4 +17,5 @@ class OrderController(val orderRepository: OrderRepository) {
 
     @GetMapping("/{id}")
     fun getOrderById(id: Int): ResponseEntity<Order> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(orderRepository.findById(id)))
+
 }

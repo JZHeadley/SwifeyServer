@@ -16,4 +16,7 @@ interface OrderRepository : JpaRepository<Order, Long> {
 
     @Query(value = "Select * from Orders where userId = ?1", nativeQuery = true)
     fun findByUserId(userId: String): MutableList<Order>?
+
+    @Query(value = "SELECT * FROM orders WHERE checkInId = ?1", nativeQuery = true)
+    fun findByCheckId(checkinID: Int): List<Order>?
 }

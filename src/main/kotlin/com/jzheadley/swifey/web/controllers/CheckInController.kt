@@ -6,6 +6,7 @@ import com.jzheadley.swifey.domain.payloads.CheckInPayload
 import com.jzheadley.swifey.util.ResponseUtil
 import com.jzheadley.swifey.utils.FromDTO.checkInToDTO
 import com.jzheadley.swifey.web.repositories.CheckInRepository
+import com.jzheadley.swifey.web.repositories.OrderRepository
 import com.jzheadley.swifey.web.repositories.UserRepository
 import de.bytefish.fcmjava.client.FcmClient
 import de.bytefish.fcmjava.model.options.FcmMessageOptions
@@ -19,12 +20,15 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/checkins")
-class CheckInController(private val checkInRepository: CheckInRepository, private val userRepository: UserRepository, private val fcmClient: FcmClient) {
+class CheckInController(private val checkInRepository: CheckInRepository, private val userRepository: UserRepository, private val orderRepository: OrderRepository, private val fcmClient: FcmClient) {
     @GetMapping("/")
     fun getAllCheckIns(): ResponseEntity<MutableList<CheckIn>> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findAll()))
 
     @GetMapping("/{id}")
     fun getCheckInById(id: Int): ResponseEntity<CheckIn> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findById(id)))
+
+    @GetMapping("/{checkinID}/orders")
+    fun getOrdersByID(@PathVariable("checkinID") checkinID: Int) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(orderRepository.findByCheckId(checkinID)))
 
     @PostMapping("/")
     fun createCheckIn(@RequestBody checkIn: CheckIn): ResponseEntity<CheckIn> {

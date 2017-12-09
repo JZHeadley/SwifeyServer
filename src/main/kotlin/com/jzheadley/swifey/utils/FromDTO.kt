@@ -1,9 +1,11 @@
 package com.jzheadley.swifey.utils
 
 import com.jzheadley.swifey.domain.CheckIn
+import com.jzheadley.swifey.domain.Order
 import com.jzheadley.swifey.domain.Restaurant
 import com.jzheadley.swifey.domain.User
 import com.jzheadley.swifey.web.dto.CheckInDTO
+import com.jzheadley.swifey.web.dto.OrderDTO
 import com.jzheadley.swifey.web.dto.RestaurantDTO
 import com.jzheadley.swifey.web.dto.UserDTO
 import java.time.LocalDate
@@ -16,7 +18,11 @@ object FromDTO {
                 checkIn.maxNumOrders,
                 userToDTO(checkIn.checkedInUser),
                 restaurantToDTO(checkIn.restaurantCheckedInAt),
-                checkIn.orders)
+                checkIn.orders.map(this::orderToDTO))
+    }
+
+    private fun orderToDTO(order: Order): OrderDTO {
+        return OrderDTO(order.orderId, order.specialRequest, /*order.checkIn,*/ order.orderedMeals, userToDTO(order.user))
     }
 
     fun userToDTO(user: User?): UserDTO {
@@ -26,7 +32,7 @@ object FromDTO {
 
     fun restaurantToDTO(restaurant: Restaurant?): RestaurantDTO {
         val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
-        val hours = restaurant?.hours?.filter { restaurantHours -> restaurantHours.dayOfWeek.equals(dayOfTheWeek.toUpperCase()) }?.first()
+        val hours = restaurant?.hours?.filter { restaurantHours -> restaurantHours.dayOfWeek == dayOfTheWeek.toUpperCase() }?.first()
         return RestaurantDTO(restaurant?.restaurantId,
                 restaurant?.restaurantName,
                 restaurant?.restaurantPhotoUrl,

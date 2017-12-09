@@ -18,6 +18,17 @@ interface CheckInRepository : JpaRepository<CheckIn, Long> {
             "WHERE userId=?1 ", nativeQuery = true)
     fun findByUserId(userId: String): MutableList<CheckIn>?
 
+    @Query(value = "SELECT distinct messagingId " +
+            "FROM orders o " +
+            "  JOIN users u ON o.userId = u.userID " +
+            "WHERE checkInId = ?1", nativeQuery = true)
+    fun getMessagingIdsOfCheckInOrderers(checkInId: Int): List<String>
+
+
+    @Query(value = "UPDATE checkin " +
+            "SET acceptingOrders = FALSE " +
+            "WHERE checkInId = ?1", nativeQuery = true)
+    fun closeCheckIn(checkInId: Int)
 //    @Modifying
 //    @Query(value = "INSERT INTO checkin (checkInDate, restaurantId, maxNumOrders, userId) VALUES (sysdate,?2,?3,?4)", nativeQuery = true)
 //    @Transactional

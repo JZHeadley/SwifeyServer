@@ -4,9 +4,7 @@ import com.jzheadley.swifey.domain.Order
 import com.jzheadley.swifey.util.ResponseUtil
 import com.jzheadley.swifey.web.repositories.OrderRepository
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -17,5 +15,9 @@ class OrderController(val orderRepository: OrderRepository) {
 
     @GetMapping("/{id}")
     fun getOrderById(id: Int): ResponseEntity<Order> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(orderRepository.findById(id)))
+
+    @PostMapping("/")
+    fun createOrder(@RequestBody order: Order): ResponseEntity<Order> =
+            ResponseUtil.wrapOrNotFound(Optional.ofNullable(orderRepository.save(order)))
 
 }

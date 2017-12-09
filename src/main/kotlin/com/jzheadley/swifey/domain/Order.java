@@ -1,6 +1,6 @@
 package com.jzheadley.swifey.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -17,7 +17,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "checkInId")
-    @JsonManagedReference
+    @JsonBackReference(value = "checkInReference")
     private CheckIn checkIn;
 
     @ManyToMany

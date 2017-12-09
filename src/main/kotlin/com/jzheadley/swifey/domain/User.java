@@ -1,6 +1,7 @@
 package com.jzheadley.swifey.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
@@ -27,7 +28,8 @@ public class User {
     private Phone phone;
 
     @OneToMany(mappedBy = "checkedInUser")
-    @JsonIgnoreProperties({"checkedInUser"})
+    @JsonIgnoreProperties({"checkedInUser", "orders", "checkIn"})
+    @JsonManagedReference
     private Set<CheckIn> checkIns;
 
     @ManyToMany

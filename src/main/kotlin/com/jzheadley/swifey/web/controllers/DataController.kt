@@ -29,7 +29,7 @@ class DataController(val userRepository: UserRepository, val phoneRepository: Ph
         val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
         val restaurantHoursToday = RestaurantHours(Time(9, 0, 0), Time(20, 0, 0), dayOfTheWeek, restaurantToday)
 
-        val checkIn = CheckIn(null, Timestamp.from(Instant.now()), 6, user1, restaurant, setOf())
+        val checkIn = CheckIn(null, Timestamp.from(Instant.now()), 6, user1, restaurant, mutableSetOf())
         phoneRepository.save(phone1)
 
         phoneRepository.save(phone2)

@@ -130,4 +130,43 @@ CREATE TABLE MEAL_DISCOUNTS (
 );
 
 
-CREATE PROCEDURE checkDiscount
+CREATE TABLE following_log (
+  logId      INTEGER(42) PRIMARY KEY AUTO_INCREMENT,
+  timestamp  TIMESTAMP,
+  logMessage VARCHAR(512)
+);
+
+
+CREATE TRIGGER log_following_additions
+  BEFORE INSERT
+  ON Followings
+  FOR EACH ROW
+  BEGIN
+    CALL log_following_change(NEW.userId, ' gained a follower with id ', NEW.followerId);
+  END;
+
+CREATE TRIGGER log_following_losses
+  BEFORE DELETE
+  ON Followings
+  FOR EACH ROW
+  BEGIN
+    CALL log_following_change(OLD.userId, ' lost a follower with id ', OLD.followerId);
+  END;
+
+CREATE FUNCTION log_following_change(userId VARCHAR(42), message VARCHAR(255), followerId VARCHAR(42))
+  RETURNS INT
+  BEGIN
+    INSERT INTO following_log (timestamp, logMessage)
+    VALUES (current_timestamp, CONCAT(userId, message, followerId));
+    RETURN 0;
+  END;
+
+CREATE OR REPLACE VIEW followings_named AS
+  SELECT
+    concat(u.firstName, ' ', u.lastName),
+    concat(f.firstName, ' ', f.lastName)
+  FROM users u
+    JOIN followings s ON u.userID = s.userId
+    JOIN users f ON s.followerId = f.userID;
+
+

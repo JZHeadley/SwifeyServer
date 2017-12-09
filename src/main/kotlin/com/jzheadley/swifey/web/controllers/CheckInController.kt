@@ -10,6 +10,7 @@ import com.jzheadley.swifey.web.repositories.UserRepository
 import de.bytefish.fcmjava.client.FcmClient
 import de.bytefish.fcmjava.model.options.FcmMessageOptions
 import de.bytefish.fcmjava.requests.data.DataMulticastMessage
+import de.bytefish.fcmjava.requests.notification.NotificationMulticastMessage
 import de.bytefish.fcmjava.requests.notification.NotificationPayload
 import de.bytefish.fcmjava.responses.FcmMessageResponse
 import org.springframework.http.ResponseEntity
@@ -26,6 +27,15 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
     @GetMapping("/{id}")
     fun getCheckInById(id: Int): ResponseEntity<CheckIn> = ResponseUtil.wrapOrNotFound(Optional.ofNullable(checkInRepository.findById(id)))
 
+    @PostMapping("/{id}/close")
+    fun closeCheckInForOrders(@PathVariable("id") id: Int) {
+        val checkIn: CheckIn? = checkInRepository.findById(id)
+        if (checkIn!!.acceptingOrders) {
+            checkInRepository.closeCheckIn(id)
+            sendNotificationOfCheckInClosure(checkIn)
+        }
+    }
+
     @PostMapping("/")
     fun createCheckIn(@RequestBody checkIn: CheckIn): ResponseEntity<CheckIn> {
         // Equivalent call if worked how I was counting on them too...
@@ -34,12 +44,12 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
 
         //Logic to handle sending messages to the correct people.
         val savedCheckIn = checkInRepository.save(checkIn)
-        sendNotifsToFollowersOfUser(savedCheckIn.checkedInUser!!.userId, savedCheckIn)
+        sendNotifsOfCheckInToFollowersOfUser(savedCheckIn.checkedInUser!!.userId, savedCheckIn)
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(savedCheckIn))
 
     }
 
-    private fun sendNotifsToFollowersOfUser(userId: String, checkIn: CheckIn) {
+    private fun sendNotifsOfCheckInToFollowersOfUser(userId: String, checkIn: CheckIn) {
         val user: User = userRepository.findById(userId)!!
         val messageOptions = FcmMessageOptions.builder()
                 .setTimeToLive(Duration.ofHours(1))
@@ -53,6 +63,21 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
                         .setClickAction("RESTAURANT_MENU_FROM_CHECKIN")
                         .setBody(user.name + " has checked in at " + checkIn.restaurantCheckedInAt!!.restaurantName + ".  Place an order Now!")
                         .setTitle("A Swifey has checked in")
+                        .build())
+        val response: FcmMessageResponse = fcmClient.send(notification)
+        println("FCM Message Response:\t" + response)
+    }
+
+    private fun sendNotificationOfCheckInClosure(checkIn: CheckIn?) {
+        val messageOptions = FcmMessageOptions.builder()
+                .setTimeToLive(Duration.ofHours(1))
+                .build()
+        val messagingingIds: List<String> = checkInRepository.getMessagingIdsOfCheckInOrderers(checkIn?.checkInId!!)
+        val notification = NotificationMulticastMessage(messageOptions,
+                messagingingIds,
+                NotificationPayload.builder()
+                        .setBody("Pick up your order from " + checkIn.checkedInUser!!.name + " at " + checkIn.restaurantCheckedInAt?.restaurantName)
+                        .setTitle("Pick Up Your Order Now")
                         .build())
         val response: FcmMessageResponse = fcmClient.send(notification)
         println("FCM Message Response:\t" + response)

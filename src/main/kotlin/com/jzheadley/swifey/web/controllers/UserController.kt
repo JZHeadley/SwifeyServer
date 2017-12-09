@@ -1,8 +1,6 @@
 package com.jzheadley.swifey.web.controllers
 
-import com.jzheadley.swifey.domain.CheckIn
 import com.jzheadley.swifey.domain.Following
-import com.jzheadley.swifey.domain.Restaurant
 import com.jzheadley.swifey.domain.User
 import com.jzheadley.swifey.util.ResponseUtil
 import com.jzheadley.swifey.utils.FromDTO.checkInToDTO
@@ -33,6 +31,7 @@ class UserController(val userRepository: UserRepository, val phoneRepository: Ph
 
     @GetMapping("/{id}/follows")
     fun getFollowersOfUser(@PathVariable("id")id:String) = ResponseUtil.wrapOrNotFound(Optional.ofNullable(userRepository.findFollowersOfUser(id)))
+
 
     @PostMapping("/following")
     fun addFollowing (@RequestBody following: Following): ResponseEntity<Int> {

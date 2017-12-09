@@ -517,12 +517,10 @@ CREATE TRIGGER log_following_losses
     CALL log_following_change(OLD.userId, ' lost a follower with id ', OLD.followerId);
   END;
 
-CREATE FUNCTION log_following_change(userId VARCHAR(42), message VARCHAR(255), followerId VARCHAR(42))
-  RETURNS INT
+CREATE procedure log_following_change(userId VARCHAR(42), message VARCHAR(255), followerId VARCHAR(42))
   BEGIN
     INSERT INTO following_log (timestamp, logMessage)
     VALUES (current_timestamp, CONCAT(userId, message, followerId));
-    RETURN 0;
   END;
 
 CREATE OR REPLACE VIEW followings_named AS

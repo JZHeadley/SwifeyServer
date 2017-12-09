@@ -30,9 +30,9 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
     @PostMapping("/{id}/close")
     fun closeCheckInForOrders(@PathVariable("id") id: Int) {
         val checkIn: CheckIn? = checkInRepository.findById(id)
-        if (checkIn!!.acceptingOrders) {
-            checkInRepository.closeCheckIn(id)
+        if (checkIn?.acceptingOrders!!) {
             sendNotificationOfCheckInClosure(checkIn)
+            return checkInRepository.closeCheckIn(id)
         }
     }
 
@@ -43,6 +43,7 @@ class CheckInController(private val checkInRepository: CheckInRepository, privat
 //        checkInRepository.save(checkIn.restaurantCheckedInAt.restaurantId, checkIn.maxNumOrders, checkIn.checkedInUser.userId)
 
         //Logic to handle sending messages to the correct people.
+        checkIn.acceptingOrders = true
         val savedCheckIn = checkInRepository.save(checkIn)
         sendNotifsOfCheckInToFollowersOfUser(savedCheckIn.checkedInUser!!.userId, savedCheckIn)
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(savedCheckIn))

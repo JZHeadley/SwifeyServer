@@ -16,6 +16,7 @@ object FromDTO {
     fun checkInToDTO(checkIn: CheckIn): CheckInDTO {
         return CheckInDTO(checkIn.checkInId,
                 checkIn.maxNumOrders,
+                checkIn.acceptingOrders,
                 userToDTO(checkIn.checkedInUser),
                 restaurantToDTO(checkIn.restaurantCheckedInAt),
                 checkIn.orders.map(this::orderToDTO))

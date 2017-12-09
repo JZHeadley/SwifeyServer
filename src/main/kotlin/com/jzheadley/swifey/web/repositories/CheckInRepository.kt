@@ -2,8 +2,10 @@ package com.jzheadley.swifey.web.repositories
 
 import com.jzheadley.swifey.domain.CheckIn
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import javax.transaction.Transactional
 
 @SuppressWarnings("unused")
 @Repository
@@ -24,7 +26,8 @@ interface CheckInRepository : JpaRepository<CheckIn, Long> {
             "WHERE checkInId = ?1", nativeQuery = true)
     fun getMessagingIdsOfCheckInOrderers(checkInId: Int): List<String>
 
-
+    @Modifying
+    @Transactional
     @Query(value = "UPDATE checkin " +
             "SET acceptingOrders = FALSE " +
             "WHERE checkInId = ?1", nativeQuery = true)

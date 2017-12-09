@@ -136,6 +136,23 @@ CREATE TABLE following_log (
   logMessage VARCHAR(512)
 );
 
+CREATE TRIGGER prevent_gt_max_num_orders
+  BEFORE INSERT
+  ON orders
+  FOR EACH ROW
+  BEGIN
+    SET @maxNumOrders = (SELECT maxNumOrders
+                         FROM checkIn
+                         WHERE checkInId = NEW.checkInId);
+    IF (SELECT count(*)
+        FROM Order_meals
+        WHERE Orders.orderId = NEW.orderId) >= @maxNumOrders
+    THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'No more orders are allowed for this check in';
+    END IF;
+  END;
+
 
 CREATE TRIGGER log_following_additions
   BEFORE INSERT

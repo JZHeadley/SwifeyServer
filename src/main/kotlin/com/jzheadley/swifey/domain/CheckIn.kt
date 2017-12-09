@@ -1,7 +1,7 @@
 package com.jzheadley.swifey.domain
 
-import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.sql.Timestamp
 import javax.persistence.*
 
@@ -24,5 +24,5 @@ data class CheckIn(
         val restaurantCheckedInAt: Restaurant?,
 
         @OneToMany(mappedBy = "checkIn", targetEntity = Order::class)
-        @JsonBackReference(value = "checkInReference")
+        @JsonManagedReference(value = "checkInReference")
         var orders: MutableSet<Order>)

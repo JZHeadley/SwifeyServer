@@ -100,12 +100,10 @@ CREATE TABLE Orders (
   orderId        INTEGER(42) AUTO_INCREMENT,
   orderDate      DATETIME,
   checkInId      INTEGER(42),
-  #   mealId         INTEGER(42),
   userId         VARCHAR(42),
   specialRequest VARCHAR(140),
   PRIMARY KEY (orderId),
   FOREIGN KEY (checkInId) REFERENCES CheckIn (checkInId),
-  #   FOREIGN KEY (mealId) REFERENCES Meals (mealId),
   FOREIGN KEY (userId) REFERENCES Users (userId)
 );
 
@@ -118,7 +116,7 @@ CREATE TABLE Order_meals (
 );
 
 CREATE TABLE Discounts (
-  discountId     INTEGER(42) PRIMARY KEY,
+  discountId     INTEGER(42) PRIMARY KEY AUTO_INCREMENT,
   discountAmount INTEGER(4),
   discountCode   VARCHAR(30)
 );
@@ -132,4 +130,4 @@ CREATE TABLE MEAL_DISCOUNTS (
 );
 
 
-
+CREATE PROCEDURE checkDiscount

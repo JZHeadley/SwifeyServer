@@ -33,6 +33,7 @@ object FromDTO {
 
     fun restaurantToDTO(restaurant: Restaurant?): RestaurantDTO {
         val dayOfTheWeek = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
+        println(restaurant)
         val hours = restaurant?.hours?.filter { restaurantHours -> restaurantHours.dayOfWeek == dayOfTheWeek.toUpperCase() }?.first()
         return RestaurantDTO(restaurant?.restaurantId,
                 restaurant?.restaurantName,

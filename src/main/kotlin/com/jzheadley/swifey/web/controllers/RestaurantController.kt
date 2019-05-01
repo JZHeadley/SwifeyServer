@@ -27,6 +27,7 @@ class RestaurantController(val restaurantRepository: RestaurantRepository, val m
     @GetMapping("/today")
     fun getTodaysRestaurants(): ResponseEntity<List<RestaurantDTO>> {
         val restaurants = restaurantRepository.findByDayOfWeek(LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH))?.map { restaurant -> restaurantToDTO(restaurant) }
+        println(restaurants)
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(restaurants))
     }
 

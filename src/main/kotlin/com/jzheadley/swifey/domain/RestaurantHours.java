@@ -77,7 +77,7 @@ public class RestaurantHours {
                 ", openTime=" + openTime +
                 ", closeTime=" + closeTime +
                 ", dayOfWeek='" + dayOfWeek + '\'' +
-                ", restaurant=" + restaurant.getRestaurantId() +
+//                ", restaurant=" + restaurant.getRestaurantId() +
                 '}';
     }
 }
